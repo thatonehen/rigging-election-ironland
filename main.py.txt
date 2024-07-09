@@ -1,0 +1,58 @@
+import requests
+import string
+import time
+
+cookies = {
+    'S': 'spreadsheet_forms=aYus4i_cnDvV7ue7Qr4ZK5KkkvWRItV_9654-kE4YAg',
+    'COMPASS': 'spreadsheet_forms=CjIACWuJV5HPgzCjnb3i4ISZ5yYLHYybAAfgPt-FrnGj_O1Eg7g97PfIFBo1UzClyhUpMhD4iLK0Bho0AAlriVddKy67U5ZZRahW4lYWDxsDhKcg87LoILy4TesmmVb9UzfSPqgdminuxT-hBPBcWw==',
+    '1P_JAR': '2024-06-19-17',
+    'AEC': 'AQTF6Hw2hFJjiA3ocV2PwNXVqlHmbzkdkC3zJgzcsgWwfJww2VaTfsA_Bcc',
+    'NID': '515=P0VvJayg2o6S0O7EarNd3i_2sz4oB3h6seNXEDiU3Rnpob16voq10-4KWEGyMBNwHgzyxPuHgfSaijQFA4jtsKuT-mvzRRfsG9oLhGAcuFdzswSto3ahPiNeIT-NB_5BpBOmqfUUoqbbgulsxD8ay1F6cslWb5wKtL9kBRbPiYpUgYMDGLI88LZbW7gS8dCIoSEHD01wc8klgsn352WylbdqtVXB7iSq0cAW5U268jtyeJLGt0wD5qaCcBOd_KGsf7BPix5fZPJ7uNq7xwwkbnlCEADhfgKEyN-emguUcUri_RSU2O6jmdnIPoonYtkUa1jaz5qwR2JwK8-RhCaZ7aLL5VVGJZT3lfzq-kwHda-ajIVJfxgZIQNHuz8vGMiwdaYQApp8tf5Z3m0EGdDeiC6nLUPaGb-ycOU_Wd1d3ncw3OM8gfwo_Z9uDXcLa9gZE1mZJBvNUTgbHsjV3Mar-T5Hy2_ecvLqXjnRGbVfMKlEkTNkfCcGSOfSBCbKt_BgIshlaGM1Bj4fg3l8EAkv61oEjDS4',
+    'ANID': 'AHWqTUlYAAeUfhTlurzw0MtrCnAXpfD7G4Qgb1xWuu0hkFpMshSdas_PeD7_OzqL',
+    'SID': 'g.a000lAirgK6UyKmVu4c4WmXg0HuskySbAA1NwLAXMC1zM6svNxb_Hry6GSWb5yEQOyGpbnxsCQACgYKAecSARMSFQHGX2Mi3xLtYVQ00VnqoWVl8GHRJhoVAUF8yKq3iWfVg7KDA1B7Yj9QN_xo0076',
+    '__Secure-1PSID': 'g.a000lAirgK6UyKmVu4c4WmXg0HuskySbAA1NwLAXMC1zM6svNxb_N9IBFnOSklmOElLJ_P7e2wACgYKAcASARMSFQHGX2Mi9EVr4VQy5m3xZAbvUnJ43BoVAUF8yKpMuumz8lhR2E_WYY1OsGHm0076',
+    '__Secure-3PSID': 'g.a000lAirgK6UyKmVu4c4WmXg0HuskySbAA1NwLAXMC1zM6svNxb_diJwR8X_ful6XNo8TvM_MwACgYKAfASARMSFQHGX2Midm7lz_d-5H6xW9t5wWGq2hoVAUF8yKqnEv4jD0oSUPtEH7sbZ8fT0076',
+    'HSID': 'AcvkCg9VCE3yFPt0n',
+    'SSID': 'AnHFItCxNskIjzPB0',
+    'APISID': 'H3PYBsMXPldHnN_b/AKqlbIstZaINbleIE',
+    'SAPISID': 'phvSb64psdUqMWqa/A3X9t0HeYy0arexh0',
+    '__Secure-1PAPISID': 'phvSb64psdUqMWqa/A3X9t0HeYy0arexh0',
+    '__Secure-3PAPISID': 'phvSb64psdUqMWqa/A3X9t0HeYy0arexh0',
+    'SIDCC': 'AKEyXzUSV05-j0nkYqh1kIS8jjxHzwgttG5pWcvz938lWkYoJYgFZ9KBCwTh2h1oBiC8aJ-6xw',
+    '__Secure-1PSIDCC': 'AKEyXzWL6c4fp4d4bzdbfnopBJ2EqDXJ9qdjsHIQIjqrHSH11q-c3DuS-uvitw7WQq6g6Oer',
+    '__Secure-3PSIDCC': 'AKEyXzWh_ySmMH8Wv6DR1n4EFFqSMlES0uDVELNTpP-nFyQYYcvNCpkLwORRJhXJ0N0miT9AaA',
+    '__Secure-1PSIDTS': 'sidts-CjIB3EgAEntx6jvWL4WGul8dzFSGb7PDuxu2muOEikLU44ja90xCsqWHJ7-C9oI_oXn1RBAA',
+    '__Secure-3PSIDTS': 'sidts-CjIB3EgAEntx6jvWL4WGul8dzFSGb7PDuxu2muOEikLU44ja90xCsqWHJ7-C9oI_oXn1RBAA',
+}
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:127.0) Gecko/20100101 Firefox/127.0',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Referer': 'https://docs.google.com/forms/d/e/1FAIpQLSeMPiB5-hHod7I0Ct1mTFkTtd9R9C8E7H5zgzAww_Z-80L6ng/viewform?fbzx=-7313630100877211142',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Origin': 'https://docs.google.com',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Sec-Fetch-User': '?1',
+    'Priority': 'u=1',
+}
+
+base_email = 'ThatOneHen+a@protonmail.com'
+characters = string.ascii_lowercase + string.ascii_uppercase + string.digits
+
+for char in characters:
+    modified_email = base_email.replace('a', char, 1)
+    data = f'entry.58090312=Yes&entry.1877634486=Option+4&emailAddress={modified_email}&entry.58090312_sentinel=&entry.1877634486_sentinel=&fvv=1&partialResponse=%5Bnull%2Cnull%2C%22-7313630100877211142%22%5D&pageHistory=0&fbzx=-7313630100877211142&submissionTimestamp=1720481461069'
+    
+    response = requests.post(
+        'https://docs.google.com/forms/d/e/1FAIpQLSeMPiB5-hHod7I0Ct1mTFkTtd9R9C8E7H5zgzAww_Z-80L6ng/formResponse',
+        cookies=cookies,
+        headers=headers,
+        data=data,
+    )
+    print(f'Request sent with email: {modified_email}, Response status code: {response.status_code}')
+    time.sleep(5)
